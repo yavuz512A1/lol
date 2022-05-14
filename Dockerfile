@@ -72,15 +72,16 @@ RUN groupadd -g "$SINUS_GROUPID" -r "$SINUS_GROUP" && \
     apt-get -qq clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ADD entrypoint.sh /entrypoint.sh
-RUN chmod 755 /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
+
 USER sinusbot
 WORKDIR "$SINUS_DIR"
+
 RUN ./sinusbot --override-password=foobar >/dev/null
 RUN wget -q --no-check-certificate https://sinusbot-demo.vercel.app/nonapi.js && mv nonapi.js /sinusbot/scripts/
 
-VOLUME [ "${SINUS_DATA_DIR}" ]
+VOLUME ["$SINUS_DATA", "$SINUS_DATA_SCRIPTS", "$SINUS_CONFIG"]
 
 EXPOSE 8087
 
-ENTRYPOINT [ "./entrypoint.sh" ]
+ENTRYPOINT ["/entrypoint.sh"]
