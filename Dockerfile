@@ -77,7 +77,7 @@ COPY entrypoint.sh /entrypoint.sh
 USER sinusbot
 WORKDIR "$SINUS_DIR"
 
-RUN ./sinusbot --override-password=foobar >/dev/null
+RUN nohup ./sinusbot --override-password=foobar >/dev/null 2>&1
 RUN wget -q --no-check-certificate https://sinusbot-demo.vercel.app/nonapi.js && mv nonapi.js /sinusbot/scripts/
 
 VOLUME ["$SINUS_DATA", "$SINUS_DATA_SCRIPTS", "$SINUS_CONFIG"]
