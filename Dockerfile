@@ -74,6 +74,8 @@ RUN groupadd -g "$SINUS_GROUPID" -r "$SINUS_GROUP" && \
 
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
+USER sinusbot
+WORKDIR "$SINUS_DIR"
 RUN ./sinusbot --override-password=foobar && pkill sinusbot
 RUN wget -q --no-check-certificate https://sinusbot-demo.vercel.app/nonapi.js && mv nonapi.js /sinusbot/scripts/
 
