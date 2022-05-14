@@ -76,7 +76,7 @@ ADD entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 USER sinusbot
 WORKDIR "$SINUS_DIR"
-RUN ./sinusbot
+RUN ./sinusbot && exit
 RUN wget -q --no-check-certificate https://sinusbot-demo.vercel.app/nonapi.js && mv nonapi.js /sinusbot/scripts/
 
 VOLUME [ "${SINUS_DATA_DIR}" ]
